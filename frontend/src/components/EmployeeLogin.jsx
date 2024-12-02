@@ -34,7 +34,7 @@ function EmployeeLogin() {
             <div className='d-flex justify-content-center align-items-center vh-100 LoginPage'>
                 <form className='p-3 w-25 rounded text-center LoginForm' onSubmit={handleSubmit}>
                     <span className='text-danger text-sm'>{error && error}</span>
-                    <h2 className='pb-3 text-white text-xl font-bold'>Login Page</h2>
+                    <h2 className='pb-3 text-white text-xl font-bold'>Login Pageee</h2>
 
                     <div className='form-group'>
                         <input
