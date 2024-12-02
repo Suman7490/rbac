@@ -4,6 +4,7 @@ import jwt from "jsonwebtoken"
 import bcrypt from 'bcrypt'
 import multer from 'multer'
 import path from 'path'
+import { decode } from "punycode"
 
 const router = express.Router()
 
@@ -42,11 +43,11 @@ router.post('/', async (req, res) => {
             if (err) {
                 return res.status(500).json({ LoginStatus: false, Error: "Query Error" });
             }
-            console.log("Query Result:", result); 
+            console.log("Query Result:", result);
             if (result.length === 0) {
                 return res.status(401).json({ LoginStatus: false, Error: "Wrong Email or Password" });
             }
-            
+
             const user = result[0];
             console.log("User Role:", user.role)
             const isMatch = await bcrypt.compare(password, user.password);
@@ -54,19 +55,20 @@ router.post('/', async (req, res) => {
                 return res.status(401).json({ LoginStatus: false, Error: "Wrong Email or Password" });
             }
             const role = user.role;
-            const token = jwt.sign({ role, email }, "JWT_secret_key", { expiresIn: '1d' });
+            const id = user.id;
+            const token = jwt.sign({ id, role, email }, "JWT_secret_key", { expiresIn: '1d' });
             res.cookie('token', token, { httpOnly: true, sameSite: 'Lax', secure: process.env.NODE_ENV === 'production' });
             if (role === 'Admin') {
                 return res.json({
                     LoginStatus: true,
                     Redirect: '/dashboard',
-                    UserData: { email, role }
+                    UserData: { email, role },
                 });
             } else if (role === 'Employee') {
                 return res.json({
                     LoginStatus: true,
                     Redirect: '/empdashboard',
-                    UserData: { email, role }
+                    UserData: { email, role },
                 });
             } else {
                 return res.status(403).json({ LoginStatus: false, Error: "Unknown Role" });
@@ -78,25 +80,40 @@ router.post('/', async (req, res) => {
 });
 
 
-
-
 router.get('/verifytoken', (req, res) => {
     const token = req.cookies.token;
 
     if (!token) {
         return res.status(403).json({ message: 'Token missing' });
     }
-
     try {
         const decoded = jwt.verify(token, 'JWT_secret_key');
         console.log('Decoded Token:', decoded);
-        res.status(200).json({ isAuthenticated: true  , role: decoded.role});
+        res.status(200).json({ isAuthenticated: true, role: decoded.role });
     } catch (err) {
         console.error('Token verification failed:', err);
         res.status(403).json({ message: 'Invalid Token.', });
     }
 });
 
+// ********* Fetch data of legged in user *********************
+router.get('/profile', (req, res) => {
+    const token = req.cookies.token;   
+    if (!token) return res.status(401).json({ success: false, error: 'Unauthorized' });
+
+    jwt.verify(token, 'JWT_secret_key', (err, decoded) => {
+        if(err) return res.status(401).json({success: false, error: "Unauthorized"});
+        console.log("Decoded JWT payload: ", decoded);
+        
+        const sql = 'SELECT * FROM employee WHERE id = ?'  
+        con.query(sql, [decoded.id], (err, result) => {
+            if(err) return res.status(500).json({success: false, error: 'Server Error'})
+            if(result.length === 0) return res.status(404).json({success: false, error: 'User not found'})
+            res.json({success: true, data: result[0]})
+        
+        })
+    })
+})
 
 
 router.post('/add_category', (req, res) => {

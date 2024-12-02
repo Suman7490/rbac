@@ -3,7 +3,7 @@ import axios from 'axios'
 import './style.css'
 import { useNavigate } from 'react-router-dom'
 
-function EmployeeLogin() {
+function EmployeeLogin({ setInfo }) {
     const [values, setValues] = useState({ email: '', password: '' })
     const [error, setError] = useState(null)
 
@@ -17,6 +17,7 @@ function EmployeeLogin() {
                 if (result.data.LoginStatus) {
                     const redirectPath = result.data.Redirect || '/empDashboard/profile';
                     navigate(redirectPath,{ state: { user: result.data.user } })
+                    setInfo(result.data.user);
                 } else {
                     setError(result.data.Error)
                 }
@@ -34,7 +35,7 @@ function EmployeeLogin() {
             <div className='d-flex justify-content-center align-items-center vh-100 LoginPage'>
                 <form className='p-3 w-25 rounded text-center LoginForm' onSubmit={handleSubmit}>
                     <span className='text-danger text-sm'>{error && error}</span>
-                    <h2 className='pb-3 text-white text-xl font-bold'>Login Pageee</h2>
+                    <h2 className='pb-3 text-white text-xl font-bold'>Login Page</h2>
 
                     <div className='form-group'>
                         <input
