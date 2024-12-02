@@ -5,7 +5,7 @@ import { adminRouter } from "./routes/adminRoute.js"
 
 const app = express()
 app.use(cors({
-    origin: ["http://localhost:5173", "https://rbac-c06561a0f-sumans-projects-a68ad3a2.vercel.app"],
+    origin: ["https://rbac-c06561a0f-sumans-projects-a68ad3a2.vercel.app"],
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     credentials: true
 }
