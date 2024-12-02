@@ -12,7 +12,7 @@ function EmployeeLogin() {
 
     const handleSubmit = (event) => {
         event.preventDefault()
-        axios.post('http://localhost:8081/auth/employeelogin', values)
+        axios.post('http://localhost:8081/auth', values)
             .then(result => {
                 if (result.data.LoginStatus) {
                     const redirectPath = result.data.Redirect || '/empDashboard/profile';

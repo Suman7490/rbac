@@ -5,7 +5,7 @@ import { adminRouter } from "./routes/adminRoute.js"
 
 const app = express()
 app.use(cors({
-    origin: ["https://rbac-one-neon.vercel.app"],
+    origin: ["https://rbac-one-neon.vercel.app", "http://localhost:5173"],
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     credentials: true
 }

@@ -13,16 +13,16 @@ const Dashboard = () => {
         const response = await axios.get('http://localhost:8081/auth/verifytoken');
         if (response.status === 200) {
           setUserRole(response.data.role);
-          console.log(setUserRole(response.data.role));
+          // console.log(setUserRole(response.data.role));
           
         } else {
           setUserRole(null);
-          navigate('/employeeLogin');
+          navigate('/');
         }
       } catch (error) {
         console.error('Error fetching user role:', error);
         setUserRole(null);
-        navigate('/employeeLogin');
+        navigate('/');
       }
     };
     fetchUserRole();
@@ -32,7 +32,7 @@ const Dashboard = () => {
     axios.get('http://localhost:8081/auth/logout')
       .then(result => {
         if (result.data.Status) {
-          navigate('/employeeLogin')
+          navigate('/')
         }
       })
   }

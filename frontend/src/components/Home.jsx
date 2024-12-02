@@ -1,7 +1,7 @@
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { Table, TableBody, TableCell, TableHeader, TableHeaderCell, TableRow, Icon } from 'semantic-ui-react'
+import { Icon } from 'semantic-ui-react'
 
 const Home = () => {
   const [adminTotal, setAdminTotal] = useState(0)
@@ -86,26 +86,25 @@ const Home = () => {
 
       <div className='px-5 pt-3 mt-4'>
         <h4 className='text-2xl font-bold'>Admin Records</h4>
-        <Table>
-          <TableHeader>
-            <TableRow>
-              <TableHeaderCell>Email</TableHeaderCell>
-              <TableHeaderCell>Action</TableHeaderCell>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
+        <table className='table'>
+          <thead>
+            <tr>
+              <th>Email</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
             {admins.map(admin => (
-              <TableRow key={admin.id}>
-                <TableCell>{admin.email}</TableCell>
-                <TableCell>
+              <tr key={admin.id}>
+                <td>{admin.email}</td>
+                <td>
                   <Link to=''><Icon name='edit' className='edit text-primary cursor-pointer' /></Link>
                   <Icon name='trash' className='trash text-danger cursor-pointer' />
-                </TableCell>
-              </TableRow>
+                </td>
+              </tr>
             ))}
-
-          </TableBody>
-        </Table>
+          </tbody>
+        </table>
       </div>
     </>
   )

@@ -31,7 +31,7 @@ router.post('/adminlogin', (req, res) => {
 })
 
 
-router.post('/employeelogin', async (req, res) => {
+router.post('/', async (req, res) => {
     const { email, password } = req.body;
     if (!email || !password) {
         return res.status(400).json({ LoginStatus: false, Error: "Email and Password are required" });

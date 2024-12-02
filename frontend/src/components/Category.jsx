@@ -1,7 +1,6 @@
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { Table, TableBody, TableHeader, TableHeaderCell, TableRow, TableCell } from 'semantic-ui-react'
 
 const Category = () => {
     const [category, setCategory] = useState([])
@@ -26,20 +25,20 @@ const Category = () => {
                 <Link to="/dashboard/add_category">
                     <button className="ui green button">Add Category</button>
                 </Link>
-                <Table>
-                    <TableHeader>
-                        <TableRow>
-                            <TableHeaderCell>Name</TableHeaderCell>
-                        </TableRow>
-                    </TableHeader>
-                    <TableBody>
+                <table className='table mt-4'>
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                        </tr>
+                    </thead>
+                    <tbody>
                         {category.map(category => (
-                            <TableRow>
-                                <TableCell>{category.name}</TableCell>
-                            </TableRow>
+                        <tr key={category.id}>
+                            <td>{category.name}</td>
+                        </tr>
                         ))}
-                    </TableBody>
-                </Table>
+                    </tbody>
+                </table>
             </div>
         </>
     )

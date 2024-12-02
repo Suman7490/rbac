@@ -35,7 +35,7 @@ const ProtectedRoute = ({ allowedRoles, children }) => {
     }
 
     if (!isAuthenticated.auth) {
-        return <Navigate to="/employeeLogin" />; // Redirect to login if not authenticated
+        return <Navigate to="/" />; // Redirect to login if not authenticated
     }
 
     if (!allowedRoles.includes(isAuthenticated.role)) {

@@ -1,7 +1,7 @@
 import axios from 'axios'
 import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
-import { Table, TableBody, TableHeader, TableHeaderCell, TableRow, TableCell, Icon } from 'semantic-ui-react'
+import { Icon } from 'semantic-ui-react'
 
 const Employee = () => {
   const [employees, setEmployees] = useState([])
@@ -18,7 +18,6 @@ const Employee = () => {
       .catch(err => console.log(err))
   }, [])
 
-  console.log(employees)
   const handleDelete = (id) => {
     axios.delete('http://localhost:8081/auth/delete_employee/' + id)
       .then(result => {
@@ -39,39 +38,39 @@ const Employee = () => {
       <Link to="/dashboard/add_employee">
         <button className="ui green button">Add Employee</button>
       </Link>
-      <Table>
-        <TableHeader>
-          <TableRow>
-            <TableHeaderCell>Photo</TableHeaderCell>
-            <TableHeaderCell>Name</TableHeaderCell>
-            <TableHeaderCell>Role</TableHeaderCell>
-            <TableHeaderCell>Email</TableHeaderCell>
-            <TableHeaderCell>Category</TableHeaderCell>
-            <TableHeaderCell>Salary</TableHeaderCell>
-            <TableHeaderCell>Address</TableHeaderCell>
-            <TableHeaderCell>Action</TableHeaderCell>
-          </TableRow>
-        </TableHeader>
-        <TableBody>
+      <table className='table mt-4'>
+        <thead>
+          <tr>
+            <th>Photo</th>
+            <th>Name</th>
+            <th>Role</th>
+            <th>Email</th>
+            <th>Category</th>
+            <th>Salary</th>
+            <th>Address</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
           {employees.map(employee => (
-            <TableRow>
-              <TableCell>
+            <tr key={employee.id}>
+              <td>
                 <img className='w-10 h-10 rounded-full shadow-lg' src={`http://localhost:8081/Images/` + employee.photo} alt="profile" />
-              </TableCell>
-              <TableCell>{employee.name}</TableCell>
-              <TableCell>{employee.role}</TableCell>
-              <TableCell>{employee.email}</TableCell>
-              <TableCell>{employee.category_name}</TableCell>
-              <TableCell>{employee.salary}</TableCell>
-              <TableCell>{employee.address}</TableCell>
-              <TableCell>
+              </td>
+              <td>{employee.name}</td>
+              <td>{employee.role}</td>
+              <td>{employee.email}</td>
+              <td>{employee.category_name}</td>
+              <td>{employee.salary}</td>
+              <td>{employee.address}</td>
+              <td>
                 <Link to={`/dashboard/edit_employee/${employee.id}`}><Icon name='edit' className='edit text-primary cursor-pointer' /></Link>
                 <Icon onClick={() => handleDelete(employee.id)} name='trash' className='trash text-danger cursor-pointer' />
-              </TableCell>
-            </TableRow>
+              </td>
+            </tr>
           ))}
-        </TableBody>
-      </Table>
+        </tbody>
+      </table>
     </div>
 
   )

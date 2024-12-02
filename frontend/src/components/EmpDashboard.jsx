@@ -15,12 +15,12 @@ const EmpDashboard = () => {
                     setUserRole(response.data.role); 
                 } else {
                     setUserRole(null);
-                    navigate('/employeeLogin'); // Redirect to login if not authenticated
+                    navigate('/');
                 }
             } catch (error) {
                 console.error('Error fetching user role:', error);
                 setUserRole(null);
-                navigate('/employeeLogin'); // Redirect to login on error
+                navigate('/');
             }
         };
         fetchUserRole();
@@ -30,7 +30,7 @@ const EmpDashboard = () => {
         axios.get('http://localhost:8081/auth/logout')
             .then(result => {
                 if (result.data.Status) {
-                    navigate('/employeeLogin')
+                    navigate('/')
                 }
             })
     }

@@ -3,29 +3,11 @@ import { useLocation, useNavigate } from 'react-router-dom'
 import axios from 'axios'
 
 const Profile = () => {
-  const location = useLocation();
-  const navigate = useNavigate();
-  const user = location.state?.user;
 
 
-
-  const employeeRecords = () => {
-    axios.get('http://localhost:8081/auth/employeelogin')
-      .then(result => {
-        if (result.data.Status) {
-          setEmployee(result.data.Result)
-        }
-      })
-  }
-
-  useEffect(() => {
-    employeeRecords()
-  }, [])
   return (
     <>
       <div className="flex items-center h-screen w-full justify-center">
-
-
         <div className="max-w-xs">
           <div className="bg-white shadow-xl rounded-lg py-3">
             <div className="photo-wrapper p-2">
