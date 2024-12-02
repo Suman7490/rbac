@@ -10,7 +10,7 @@ import AddCategory from './components/AddCategory'
 import AddEmployee from './components/AddEmployee'
 import EditEmployee from './components/EditEmployee'
 import ProtectedRoute from './components/ProtectedRoute'
-import EmployeeLogin from './components/employeeLogin'
+import EmployeeLogin from './components/EmployeeLogin'
 import EmpDashboard from './components/EmpDashboard'
 import EmpHome from './components/EmpHome'
 function App() {
