@@ -1,6 +1,6 @@
 Run command for frontend = npm run dev
 run commandfor backend = npm start
-need to start mysql from xamp (start apache and mysql in xamp.
+need to start mysql from xamp (start apache and mysql in xamp).
 create a database named "KRW"
 import sql tables I provided in github
 admin login credential = email = suman@gmail.com
