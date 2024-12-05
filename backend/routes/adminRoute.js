@@ -55,7 +55,8 @@ router.post('/', async (req, res) => {
             }
             const role = user.role;
             const id = user.id;
-            const token = jwt.sign({ id, role, email }, "JWT_secret_key", { expiresIn: '1d' });
+            const category = user.category;
+            const token = jwt.sign({ id, role, email, category }, "JWT_secret_key", { expiresIn: '1d' });
             res.cookie('token', token, { httpOnly: true, sameSite: 'Lax', secure: process.env.NODE_ENV === 'production' });
             if (role === 'Admin') {
                 return res.json({
@@ -95,7 +96,7 @@ router.get('/verifytoken', (req, res) => {
     }
     try {
         const decoded = jwt.verify(token, 'JWT_secret_key');
-        console.log('Decoded Token:', decoded);
+        console.log('Decoded Token of verifytoken:', decoded);
         res.status(200).json({ isAuthenticated: true, role: decoded.role });
     } catch (err) {
         console.error('Token verification failed:', err);
@@ -110,7 +111,7 @@ router.get('/profile', (req, res) => {
 
     jwt.verify(token, 'JWT_secret_key', (err, decoded) => {
         if(err) return res.status(401).json({success: false, error: "Unauthorized"});
-        console.log("Decoded JWT payload: ", decoded);
+        console.log("Decoded Token of profile: ", decoded);
         
         const sql = 'SELECT * FROM employee WHERE id = ?'  
         con.query(sql, [decoded.id], (err, result) => {
@@ -198,13 +199,46 @@ router.get('/employee', (req, res) => {
     })
 })
 
+// router.get('/teamHeadDashboard', (req, res) => {
+//     const sql = "SELECT * FROM employee WHERE role = 'Executive' AND category = 'Engineering'";
+//     con.query(sql, (err, result) => {
+//         if (err) return res.json({ Status: false, Error: "Query Error" })
+//         return res.json({ Status: true, Result: result })
+//     })
+// })
+
+
 router.get('/teamHeadDashboard', (req, res) => {
-    const sql = "SELECT * FROM employee WHERE role = 'Executive' AND category = 'Engineering'"
-    con.query(sql, (err, result) => {
-        if (err) return res.json({ Status: false, Error: "Query Error" })
-        return res.json({ Status: true, Result: result })
-    })
-})
+    const token = req.cookies.token;
+
+    jwt.verify(token, 'JWT_secret_key', (err, decoded) => {
+        if (err) {
+            return res.status(401).json({ Status: false, Error: "Unauthorized" });
+        }
+        console.log("Decoded Token of teamHeadDashboard: ", decoded);
+
+        const userCategory = decoded.category; 
+
+        if (!userCategory) {
+            return res.status(400).json({ Status: false, Error: "User category not found in token" });
+        }
+
+        const sql = "SELECT * FROM employee WHERE role = 'Executive' AND category = ?"; 
+        con.query(sql, [userCategory], (err, result) => {
+            if (err) {
+                return res.status(500).json({ Status: false, Error: "Query Error" });
+            }
+
+            if (result.length === 0) {
+                return res.status(404).json({ Status: false, Error: 'No executives found in this category' });
+            }
+
+            res.json({ Status: true, Result: result });
+        });
+    });
+});
+
+
 
 router.get('/employee/:id', (req, res) => {
     const id = req.params.id;
