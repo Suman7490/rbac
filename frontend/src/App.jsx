@@ -13,6 +13,11 @@ import ProtectedRoute from './components/ProtectedRoute'
 import EmployeeLogin from './components/EmployeeLogin'
 import EmpDashboard from './components/EmpDashboard'
 import EmpHome from './components/EmpHome'
+import Roles from './components/Roles'
+import AddRoles from './components/AddRoles'
+import TeamHeadDashboard from './components/TeamHeadDashboard'
+import TeamHeadHome from './components/TeamHeadHome'
+import Permission from './components/Permission'
 function App() {
   return (
     <>
@@ -58,6 +63,21 @@ function App() {
                 <AddCategory />
               </ProtectedRoute>
             } />
+            <Route path="roles" element={
+              <ProtectedRoute allowedRoles={['Admin']}>
+                <Roles />
+              </ProtectedRoute>
+            } />
+            <Route path="add_role" element={
+              <ProtectedRoute allowedRoles={['Admin']}>
+                <AddRoles />
+              </ProtectedRoute>
+            } />
+            <Route path="permission" element={
+              <ProtectedRoute allowedRoles={['Admin']}>
+                <Permission />
+              </ProtectedRoute>
+            } />
             <Route path="profile" element={
               <ProtectedRoute allowedRoles={['Admin']}>
                 <Profile />
@@ -65,19 +85,37 @@ function App() {
             } />
           </Route>
 
+          {/* Team Head Dashboard */}
+          <Route path="/teamHeadDashboard" element={
+            <ProtectedRoute allowedRoles={['Team Head']}>
+              <TeamHeadDashboard />
+            </ProtectedRoute>
+          }>
+            <Route index element={
+              <ProtectedRoute allowedRoles={['Team Head']}>
+                <TeamHeadHome />
+              </ProtectedRoute>
+            } />
+            <Route path="profile" element={
+              <ProtectedRoute allowedRoles={['Team Head']}>
+                <Profile />
+              </ProtectedRoute>
+            } />
+          </Route>
+
           {/* Employee Dashboard */}
           <Route path="/empdashboard" element={
-            <ProtectedRoute allowedRoles={['Employee']}>
+            <ProtectedRoute allowedRoles={['Executive']}>
               <EmpDashboard />
             </ProtectedRoute>
           }>
             <Route index element={
-              <ProtectedRoute allowedRoles={['Employee']}>
+              <ProtectedRoute allowedRoles={['Executive']}>
                 <EmpHome />
               </ProtectedRoute>
             } />
             <Route path="profile" element={
-              <ProtectedRoute allowedRoles={['Employee']}>
+              <ProtectedRoute allowedRoles={['Executive']}>
                 <Profile />
               </ProtectedRoute>
             } />

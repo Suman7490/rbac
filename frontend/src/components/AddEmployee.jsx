@@ -8,14 +8,28 @@ const AddEmployee = () => {
         role: '',
         email: '',
         password: '',
-        category_name: '',
+        category: '',
         salary: '',
         address: '',
-        photo: ''
+        photo: '',
+        status: '',
     })
     const [category, setCategory] = useState([])
+    const [role, setRole] = useState([])
     const navigate = useNavigate()
 
+    useEffect(() => {
+        axios.get('http://localhost:8081/auth/roles')
+            .then(result => {
+                if (result.data.Status) {
+                    setCategory(result.data.Result)
+                    setRole(result.data.Result)
+                } else {
+                    alert(result.data.Error)
+                }
+            })
+            .catch(err => console.log(err))
+    }, [])
     useEffect(() => {
         axios.get('http://localhost:8081/auth/category')
             .then(result => {
@@ -35,10 +49,11 @@ const AddEmployee = () => {
         formData.append('role', employee.role);
         formData.append('email', employee.email);
         formData.append('password', employee.password);
-        formData.append('category_name', employee.category_name);
+        formData.append('category', employee.category);
         formData.append('salary', employee.salary);
         formData.append('address', employee.address);
         formData.append('photo', employee.photo);
+        formData.append('status', employee.status);
         axios.post('http://localhost:8081/auth/add_employee', formData)
             .then(result => {
                 if (result.data.Status) {
@@ -71,8 +86,9 @@ const AddEmployee = () => {
                                 <label><strong>Role</strong></label>
                                 <select name='role' className='form-control' onChange={(e) => setEmployee({ ...employee, role: e.target.value })}>
                                     <option>Select role</option>
-                                    <option>Admin</option>
-                                    <option>Employee</option>
+                                    {role.map(role => (
+                                        <option key={role.name}>{role.name}</option>
+                                    ))}
                                 </select>
                             </div>
                         </div>
@@ -97,7 +113,7 @@ const AddEmployee = () => {
                         <div className="fields two">
                             <div className="field">
                                 <label><strong>Employee Category</strong></label>
-                                <select name='category_name' className='form-control' onChange={(e) => setEmployee({ ...employee, category_name: e.target.value })}>
+                                <select name='category' className='form-control' onChange={(e) => setEmployee({ ...employee, category: e.target.value })}>
                                     <option>Select Category</option>
                                     {category.map(category => {
                                         return <option value={category.name}>{category.name}</option>
@@ -132,6 +148,16 @@ const AddEmployee = () => {
                                     placeholder="Choose photo"
                                     onChange={(e) => setEmployee({ ...employee, photo: e.target.files[0] })} />
                             </div>
+                        </div>
+                        <div className="field">
+                            <label><strong>Status</strong></label>
+                            <select name='status'
+                                className='form-control'
+                                onChange={(e) => setEmployee({ ...employee, status: e.target.value })}>
+                                <option>Select Status</option>
+                                <option>Active</option>
+                                <option>Inactive</option>
+                            </select>
                         </div>
                         <button className="ui blue button w-100 blue" type="submit">Add Employee</button>
                     </form>

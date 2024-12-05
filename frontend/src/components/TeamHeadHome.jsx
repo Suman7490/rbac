@@ -3,11 +3,11 @@ import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { Icon } from 'semantic-ui-react'
 
-const Employee = () => {
+const TeamHeadHome = () => {
   const [employees, setEmployees] = useState([])
 
   useEffect(() => {
-    axios.get('http://localhost:8081/auth/employee')
+    axios.get('http://localhost:8081/auth/teamHeadDashboard')
       .then(result => {
         if (result.data.Status) {
           setEmployees(result.data.Result)
@@ -46,7 +46,6 @@ const Employee = () => {
             <th>Role</th>
             <th>Email</th>
             <th>Category</th>
-            <th>Salary</th>
             <th>Address</th>
             <th>Status</th>
             <th>Action</th>
@@ -62,7 +61,6 @@ const Employee = () => {
               <td>{employee.role}</td>
               <td>{employee.email}</td>
               <td>{employee.category}</td>
-              <td>{employee.salary}</td>
               <td>{employee.address}</td>
               <td>{employee.status}</td>
               <td>
@@ -78,4 +76,5 @@ const Employee = () => {
   )
 }
 
-export default Employee
+
+export default TeamHeadHome

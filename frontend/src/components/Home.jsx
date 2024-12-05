@@ -1,7 +1,7 @@
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { Icon } from 'semantic-ui-react'
+import { Icon, Loader } from 'semantic-ui-react'
 
 const Home = () => {
   const [adminTotal, setAdminTotal] = useState(0)
@@ -51,17 +51,18 @@ const Home = () => {
   }
   return (
     <>
-      <div className='p-3 d-flex justify-content-around mt-3'>
-        <div className='px-3 pt-2 border shadow-sm w-25'>
-          <div className='text-center pb-3'>
-            <h4 className='text-2xl font-bold'>Admin</h4>
+      {/* <div className='2xl:p-3 xl:p-3 lg:p-2 md:p-1 sm:p-1 d-flex flex-wrap justify-content-around mt-3'>
+        <div className='2xl:px-3 xl:px-3 lg:px-3 md:px-3 sm:px-2 border shadow-sm w-25'>
+          <div className='text-center 2xl:pb-3 xl:pb-3 lg:pb-3 md:pb-3 sm:pb-3'>
+            <h4 className='text-2xl md:text-2xl sm:text-sm font-bold'>Admin</h4>
           </div>
           <hr />
-          <div className='py-3 d-flex justify-between'>
+          <div className='d-flex justify-content-between items-center'>
             <h5 className='text-lg font-semibold'>Total:</h5>
-            <h5 className='text-lg font-semibold'>{adminTotal}</h5>
+            <h5 className='2xl:text-lg xl:text-lg lg:text-lg md:text-lg sm:text-sm font-semibold'>{adminTotal}</h5>
           </div>
         </div>
+        
         <div className='px-3 pt-2 border shadow-sm w-25'>
           <div className='text-center pb-3'>
             <h4 className='text-2xl font-bold'>Employee</h4>
@@ -105,7 +106,48 @@ const Home = () => {
             ))}
           </tbody>
         </table>
+      </div> */}
+      <div className='container mt-5'>
+        <div className='row'>
+          <div className='col-md-4'>
+            <div className='md:mx-8 md:px-4 px-8 pt-2 border shadow-sm'>
+              <div className='text-center pb-3'>
+                <h4 className='text-2xl font-bold'>Admin</h4>
+              </div>
+              <hr />
+              <div className='py-3 d-flex justify-between'>
+                <h5 className='text-lg font-semibold'>Total:</h5>
+                <h5 className='text-lg font-semibold'>{adminTotal}</h5>
+              </div>
+            </div>
+          </div>
+          <div className='col-md-4'>
+            <div className='md:mx-8 md:px-4 px-8 pt-2 border shadow-sm'>
+              <div className='text-center pb-3'>
+                <h4 className='text-2xl font-bold'>Employee</h4>
+              </div>
+              <hr />
+              <div className='py-3 d-flex justify-between'>
+                <h5 className='text-lg font-semibold'>Total:</h5>
+                <h5 className='text-lg font-semibold'>{employeeTotal}</h5>
+              </div>
+            </div>
+          </div>
+          <div className='col-md-4'>
+            <div className='md:mx-8 md:px-4 px-8 pt-2 border shadow-sm'>
+              <div className='text-center pb-3'>
+                <h4 className='text-2xl font-bold'>Salary</h4>
+              </div>
+              <hr />
+              <div className='py-3 d-flex justify-between'>
+                <h5 className='text-lg font-semibold'>Total:</h5>
+                <h5 className='text-lg font-semibold'>{salaryTotal}</h5>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
+
     </>
   )
 }

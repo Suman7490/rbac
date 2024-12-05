@@ -76,6 +76,22 @@ const Dashboard = () => {
                     </li>
                     <li className='w-100 hover:bg-slate-500 active:bg-slate-500 rounded px-auto'>
                       <Link
+                        to="/dashboard/roles"
+                        className='nav-link text-white px-0 align-middle'>
+                        <i className="columns icon alternate px-2 icon teal"></i>
+                        <span className='ms-2 d-none d-sm-inline'>Roles</span>
+                      </Link>
+                    </li>
+                    <li className='w-100 hover:bg-slate-500 active:bg-slate-500 rounded px-auto'>
+                      <Link
+                        to="/dashboard/permission"
+                        className='nav-link text-white px-0 align-middle'>
+                        <i className="columns icon alternate px-2 icon teal"></i>
+                        <span className='ms-2 d-none d-sm-inline'>Permission</span>
+                      </Link>
+                    </li>
+                    <li className='w-100 hover:bg-slate-500 active:bg-slate-500 rounded px-auto'>
+                      <Link
                         to="/dashboard/profile"
                         className='nav-link text-white px-0 align-middle'>
                         <i className="user icon alternate px-2 icon teal"></i>
@@ -97,7 +113,7 @@ const Dashboard = () => {
           </div>
           <div className='col p-0 m-0'>
             <div className='p-2 d-flex justify-content-center shadow'>
-              <h4 className='text-xl font-bold py-2'>Employee Management System</h4>
+              <h4 className='md:text-xl font-bold py-2'>Employee Management System</h4>
             </div>
             <Outlet />
           </div>

@@ -4,7 +4,6 @@ import jwt from "jsonwebtoken"
 import bcrypt from 'bcrypt'
 import multer from 'multer'
 import path from 'path'
-import { decode } from "punycode"
 
 const router = express.Router()
 
@@ -64,7 +63,15 @@ router.post('/', async (req, res) => {
                     Redirect: '/dashboard',
                     UserData: { email, role },
                 });
-            } else if (role === 'Employee') {
+            } 
+            else if (role === 'Team Head') {
+                return res.json({
+                    LoginStatus: true,
+                    Redirect: '/teamHeadDashboard',
+                    UserData: { email, role },
+                });
+            }
+            else if (role === 'Executive') {
                 return res.json({
                     LoginStatus: true,
                     Redirect: '/empdashboard',
@@ -115,7 +122,6 @@ router.get('/profile', (req, res) => {
     })
 })
 
-
 router.post('/add_category', (req, res) => {
     const sql = 'INSERT INTO category (`name`) VALUES (?)'
     con.query(sql, [req.body.category], (err, result) => {
@@ -124,6 +130,13 @@ router.post('/add_category', (req, res) => {
     })
 })
 
+router.post('/add_role', (req, res) => {
+    const sql = 'INSERT INTO roles (`name`) VALUES (?)'
+    con.query(sql, [req.body.role], (err, result) => {
+        if (err) return res.json({ Status: false, Error: "Query Error" })
+        return res.json({ Status: true })
+    })
+})
 
 router.get('/category', (req, res) => {
     const sql = 'SELECT * FROM category'
@@ -133,6 +146,13 @@ router.get('/category', (req, res) => {
     })
 })
 
+router.get('/roles', (req, res) => {
+    const sql = 'SELECT * FROM roles'
+    con.query(sql, (err, result) => {
+        if (err) return res.json({ Status: false, Error: "Query Error" })
+        return res.json({ Status: true, Result: result })
+    })
+})
 // ******** Image Upload **********
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
@@ -149,7 +169,7 @@ const upload = multer({
 // ******** End Image Upload **********
 
 router.post('/add_employee', upload.single('photo'), (req, res) => {
-    const sql = 'INSERT INTO employee (`name`, `role`, `email`, `password`, `category_name`, `salary`, `address`, `photo`) VALUES (?)'
+    const sql = 'INSERT INTO employee (`name`, `role`, `email`, `password`, `category`, `salary`, `address`, `photo`, `status`) VALUES (?)'
     bcrypt.hash(req.body.password, 10, (err, hash) => {
         if (err) return res.json({ Status: false, Error: "Query Error" })
         const values = [
@@ -157,10 +177,11 @@ router.post('/add_employee', upload.single('photo'), (req, res) => {
             req.body.role,
             req.body.email,
             hash,
-            req.body.category_name,
+            req.body.category,
             req.body.salary,
             req.body.address,
-            req.file.filename
+            req.file.filename,
+            req.body.status
         ]
         con.query(sql, [values], (err, result) => {
             if (err) return res.json({ Status: false, Error: "Query Error" })
@@ -171,6 +192,14 @@ router.post('/add_employee', upload.single('photo'), (req, res) => {
 
 router.get('/employee', (req, res) => {
     const sql = 'SELECT * FROM employee'
+    con.query(sql, (err, result) => {
+        if (err) return res.json({ Status: false, Error: "Query Error" })
+        return res.json({ Status: true, Result: result })
+    })
+})
+
+router.get('/teamHeadDashboard', (req, res) => {
+    const sql = "SELECT * FROM employee WHERE role = 'Executive' AND category = 'Engineering'"
     con.query(sql, (err, result) => {
         if (err) return res.json({ Status: false, Error: "Query Error" })
         return res.json({ Status: true, Result: result })
@@ -189,15 +218,16 @@ router.get('/employee/:id', (req, res) => {
 router.put('/edit_employee/:id', (req, res) => {
     const id = req.params.id;
     const sql = `UPDATE employee 
-    set name= ?, role= ?, email= ?, category_name= ?, salary= ?, address= ?
+    set name= ?, role= ?, email= ?, category= ?, salary= ?, address= ?, status= ?
     WHERE id = ?`
     const values = [
         req.body.name,
         req.body.role,
         req.body.email,
-        req.body.category_name,
+        req.body.category,
         req.body.salary,
-        req.body.address
+        req.body.address,
+        req.body.status
     ]
     con.query(sql, [...values, id], (err, result) => {
         if (err) return res.json({ Status: false, Error: "Query Error from backend" })

@@ -6,19 +6,31 @@ const EditEmployee = () => {
     const { id } = useParams();
     const navigate = useNavigate()
     const [category, setCategory] = useState([])
+    const [role, setRole] = useState([])
     const [employee, setEmployee] = useState({
         name: '',
         role: '',
         email: '',
-        category_name: '',
+        category: '',
         salary: '',
-        address: ''
+        address: '',
+        status: ''
     })
     useEffect(() => {
         axios.get('http://localhost:8081/auth/category')
             .then(result => {
                 if (result.data.Status) {
                     setCategory(result.data.Result)
+                } else {
+                    alert(result.data.Error)
+                }
+            })
+            .catch(err => console.log(err))
+
+        axios.get('http://localhost:8081/auth/roles')
+            .then(result => {
+                if (result.data.Status) {
+                    setRole(result.data.Result)
                 } else {
                     alert(result.data.Error)
                 }
@@ -34,7 +46,8 @@ const EditEmployee = () => {
                     email: result.data.Result[0].email,
                     address: result.data.Result[0].address,
                     salary: result.data.Result[0].salary,
-                    category_name: result.data.Result[0].category_name,
+                    category: result.data.Result[0].category,
+                    status: result.data.Result[0].status,
                 })
             }).catch(err => console.log(err))
 
@@ -74,12 +87,13 @@ const EditEmployee = () => {
                                 <label><strong>Role</strong></label>
                                 <select
                                     name='role'
-                                    className='form-control'  
-                                    value={employee.role}                                  
+                                    className='form-control'
+                                    value={employee.role}
                                     onChange={(e) => setEmployee({ ...employee, role: e.target.value })}>
                                     <option>Select role</option>
-                                    <option>Admin</option>
-                                    <option>Employee</option>
+                                    {role.map(role => (
+                                        <option value={role.name}>{role.name}</option>
+                                    ))}
                                 </select>
                             </div>
                         </div>
@@ -96,10 +110,10 @@ const EditEmployee = () => {
                             <div className="field">
                                 <label><strong>Employee Category</strong></label>
                                 <select
-                                    name='category_name'
+                                    name='category'
                                     className='form-control'
-                                    value={employee.category_name}
-                                    onChange={(e) => setEmployee({ ...employee, category_name: e.target.value })}>
+                                    value={employee.category}
+                                    onChange={(e) => setEmployee({ ...employee, category: e.target.value })}>
                                     <option>Select Category</option>
                                     {category.map(category => {
                                         return <option value={category.name}>{category.name}</option>
@@ -127,6 +141,17 @@ const EditEmployee = () => {
                                     value={employee.address}
                                     onChange={(e) => setEmployee({ ...employee, address: e.target.value })} />
                             </div>
+                        </div>
+                        <div className="field">
+                            <label><strong>Status</strong></label>
+                            <select name='status'
+                                className='form-control'
+                                value={employee.status}
+                                onChange={(e) => setEmployee({ ...employee, status: e.target.value })}>
+                                <option>Select Status</option>
+                                <option>Active</option>
+                                <option>Inactive</option>
+                            </select>
                         </div>
                         <button className="ui blue button w-100 blue" type="submit">Update Employee</button>
                     </form>
