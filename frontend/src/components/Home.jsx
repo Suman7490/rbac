@@ -110,11 +110,11 @@ const Home = () => {
       <div className='container mt-5'>
         <div className='row'>
           <div className='col-md-4'>
-            <div className='md:mx-8 md:px-4 px-8 pt-2 border shadow-sm'>
+            <div className='md:mx-8 md:px-4 px-8 pt-2 py-6 border shadow-xl shadow-blue-200 rounded-xl text-white card'>
               <div className='text-center pb-3'>
                 <h4 className='text-2xl font-bold'>Admin</h4>
               </div>
-              <hr />
+              <hr className='bg-white' />
               <div className='py-3 d-flex justify-between'>
                 <h5 className='text-lg font-semibold'>Total:</h5>
                 <h5 className='text-lg font-semibold'>{adminTotal}</h5>
@@ -122,11 +122,11 @@ const Home = () => {
             </div>
           </div>
           <div className='col-md-4'>
-            <div className='md:mx-8 md:px-4 px-8 pt-2 border shadow-sm'>
+            <div className='md:mx-8 md:px-4 px-8 pt-2 py-6 border shadow-xl shadow-blue-200 rounded-xl text-white card'>
               <div className='text-center pb-3'>
                 <h4 className='text-2xl font-bold'>Employee</h4>
               </div>
-              <hr />
+              <hr className='bg-white' />
               <div className='py-3 d-flex justify-between'>
                 <h5 className='text-lg font-semibold'>Total:</h5>
                 <h5 className='text-lg font-semibold'>{employeeTotal}</h5>
@@ -134,11 +134,11 @@ const Home = () => {
             </div>
           </div>
           <div className='col-md-4'>
-            <div className='md:mx-8 md:px-4 px-8 pt-2 border shadow-sm'>
+            <div className='md:mx-8 md:px-4 px-8 pt-2 py-6 border shadow-xl shadow-blue-200 rounded-xl text-white card'>
               <div className='text-center pb-3'>
                 <h4 className='text-2xl font-bold'>Salary</h4>
               </div>
-              <hr />
+              <hr className='bg-white' />
               <div className='py-3 d-flex justify-between'>
                 <h5 className='text-lg font-semibold'>Total:</h5>
                 <h5 className='text-lg font-semibold'>{salaryTotal}</h5>
@@ -146,7 +146,51 @@ const Home = () => {
             </div>
           </div>
         </div>
+
+        <div className='row mt-20 mx-3'>
+          <div className='col-md-12'>
+            <h4 className='text-2xl font-bold'>Admin Records</h4>
+            <table className='table'>
+              <thead>
+                <tr>
+                  <th>Email</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                {admins.map(admin => (
+                  <tr key={admin.id}>
+                    <td>{admin.email}</td>
+                    <td>
+                      <Link to=''><Icon name='edit' className='edit text-primary cursor-pointer' /></Link>
+                      <Icon name='trash' className='trash text-danger cursor-pointer' />
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div className='row'>
+          <div className='col-md-4'>
+            <div className='card md:flex justify-between items-center flex-row py-8 px-4'>
+              <div className='left-side w-60 flex flex-col justify-between pr-4'>
+                <h1 className='text-2xl text-white py-2'>Admin</h1>
+                <hr className='bg-white' />
+                <div className='md:flex justify-between py-2'>
+                  <h5 className='text-lg font-semibold text-white'>Total:</h5>
+                  <h5 className='text-lg font-semibold text-white'>{salaryTotal}</h5>
+                </div>
+              </div>
+              <div className='right-side w-40 h-full rounded-full border border-white text-center align-middle items-center flex justify-center overflow-hidden'>
+                <img src='https://cdn-icons-png.flaticon.com/512/9131/9131478.png' alt='' />
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
+
+
 
     </>
   )

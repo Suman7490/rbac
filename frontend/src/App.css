@@ -1,1 +1,10 @@
-
+body{
+    /* background: linear-gradient(140deg, #060b26e5 25%, #071b3fea 100%); */
+}
+.sidebar{
+    background: linear-gradient(140deg, #060B26 25%, #071B3F 100%);
+    /* background: linear-gradient(#060B26, yellow 10%, green 20%); */
+}
+.card{
+    background: linear-gradient(140deg, #060B26 25%, #002c7afc 100%);    
+}
