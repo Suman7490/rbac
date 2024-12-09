@@ -17,14 +17,16 @@ const Roles = () => {
     }, [])
   return (
 <>
+<div className='grid grid-cols-12'>
+<div className='col-span-12'>
 <div className='px-5 mt-5'>
                 <div className='d-flex justify-content-center'>
-                    <h3 className='text-3xl font-extrabold'>Roles List</h3>
+                    <h3 className='text-3xl font-extrabold text-violet-800'>Roles List</h3>
                 </div>
                 <Link to="/dashboard/add_role">
-                    <button className="ui green button">Add Role</button>
+                    <button className="ui violet button">Add Role</button>
                 </Link>
-                <table className='table mt-4'>
+                <table className='table mt-4 text-violet-800'>
                     <thead>
                         <tr>
                             <th>Name</th>
@@ -38,6 +40,8 @@ const Roles = () => {
                         ))}
                     </tbody>
                 </table>
+            </div>
+            </div>
             </div>
 </>
   )

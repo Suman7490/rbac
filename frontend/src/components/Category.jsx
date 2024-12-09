@@ -18,14 +18,16 @@ const Category = () => {
     }, [])
     return (
         <>
+         <div className='grid grid-cols-12'>
+         <div className='col-span-12'>
             <div className='px-5 mt-5'>
                 <div className='d-flex justify-content-center'>
-                    <h3 className='text-3xl font-extrabold'>Category List</h3>
+                    <h3 className='text-3xl font-extrabold text-violet-800'>Category List</h3>
                 </div>
                 <Link to="/dashboard/add_category">
-                    <button className="ui green button">Add Category</button>
+                    <button className="ui violet button">Add Category</button>
                 </Link>
-                <table className='table mt-4'>
+                <table className='table mt-4 text-violet-800'>
                     <thead>
                         <tr>
                             <th>Name</th>
@@ -39,6 +41,8 @@ const Category = () => {
                         ))}
                     </tbody>
                 </table>
+            </div>
+            </div>
             </div>
         </>
     )

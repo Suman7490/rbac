@@ -14,11 +14,13 @@ const Permission = () => {
     }, [])
     return (
         <>
+            <div className='grid grid-cols-12'>
+            <div className='col-span-12'>
             <div className='px-5 mt-5'>
                 <div className='d-flex justify-content-center'>
-                    <h3 className='text-3xl font-extrabold'>Roles List</h3>
+                    <h3 className='text-3xl font-extrabold text-violet-800'>Roles List</h3>
                 </div>
-                <table className='table mt-4'>
+                <table className='table mt-4 text-violet-800'>
                     <thead>
                         <tr>
                             <th>Name</th>
@@ -34,6 +36,8 @@ const Permission = () => {
                         ))}
                     </tbody>
                 </table>
+            </div>
+            </div>
             </div>
         </>
     )

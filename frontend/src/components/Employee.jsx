@@ -31,14 +31,16 @@ const Employee = () => {
 
 
   return (
-    <div className='px-5 mt-5'>
+    <div className='grid grid-cols-12'>
+      <div className='col-span-12'>
+      <div className='px-5 mt-5'>
       <div className='d-flex justify-content-center'>
-        <h3 className='text-3xl font-extrabold'>Employee List</h3>
+        <h3 className='text-3xl font-extrabold text-violet-800'>Employee List</h3>
       </div>
       <Link to="/dashboard/add_employee">
-        <button className="ui green button">Add Employee</button>
+        <button className="ui violet button">Add Employee</button>
       </Link>
-      <table className='table mt-4'>
+      <table className='table mt-4 table-responsive text-violet-800'>
         <thead>
           <tr>
             <th>Photo</th>
@@ -74,6 +76,9 @@ const Employee = () => {
         </tbody>
       </table>
     </div>
+      </div>
+    </div>
+    
 
   )
 }
