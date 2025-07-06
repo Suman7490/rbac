@@ -132,7 +132,7 @@ router.post('/add_category', (req, res) => {
 })
 
 router.post('/add_role', (req, res) => {
-    const sql = 'INSERT INTO roles (`name`) VALUES (?)'
+    const sql = 'INSERT INTO roles (`role`) VALUES (?)'
     con.query(sql, [req.body.role], (err, result) => {
         if (err) return res.json({ Status: false, Error: "Query Error" })
         return res.json({ Status: true })

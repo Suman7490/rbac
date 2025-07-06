@@ -92,7 +92,7 @@ const EditEmployee = () => {
                                     onChange={(e) => setEmployee({ ...employee, role: e.target.value })}>
                                     <option>Select role</option>
                                     {role.map(role => (
-                                        <option value={role.name}>{role.name}</option>
+                                        <option value={role.role}>{role.role}</option>
                                     ))}
                                 </select>
                             </div>
