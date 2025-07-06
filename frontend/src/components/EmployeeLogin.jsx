@@ -16,7 +16,7 @@ function EmployeeLogin({ setInfo }) {
             .then(result => {
                 if (result.data.LoginStatus) {
                     const redirectPath = result.data.Redirect || '/empDashboard/profile';
-                    navigate(redirectPath,{ state: { user: result.data.user } })
+                    navigate(redirectPath, { state: { user: result.data.user } })
                     setInfo(result.data.user);
                 } else {
                     setError(result.data.Error)
