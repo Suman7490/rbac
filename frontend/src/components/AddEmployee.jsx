@@ -181,8 +181,8 @@ const AddEmployee = () => {
                                     <label><strong>Role</strong></label>
                                     <select name='role' className='form-control' onChange={(e) => setEmployee({ ...employee, role: e.target.value })}>
                                         <option>Select role</option>
-                                        {role.map(role => (
-                                            <option key={role.role}>{role.role}</option>
+                                        {role.map((role, index) => (
+                                            <option key={index} value={role.role}>{role.role}</option>
                                         ))}
                                     </select>
                                 </div>
@@ -210,8 +210,8 @@ const AddEmployee = () => {
                                     <label><strong>Employee Category</strong></label>
                                     <select name='category' className='form-control' onChange={(e) => setEmployee({ ...employee, category: e.target.value })}>
                                         <option>Select Category</option>
-                                        {category.map(category => {
-                                            return <option value={category.name}>{category.name}</option>
+                                        {category.map((category, index) => {
+                                            return <option key={index} value={category.category}>{category.category}</option>
                                         })}
 
                                     </select>

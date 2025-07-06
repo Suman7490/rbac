@@ -88,17 +88,17 @@ function App() {
 
           {/* Team Head Dashboard */}
           <Route path="/teamHeadDashboard" element={
-            <ProtectedRoute allowedRoles={['Team Head']}>
+            <ProtectedRoute allowedRoles={['Manager']}>
               <TeamHeadDashboard />
             </ProtectedRoute>
           }>
             <Route index element={
-              <ProtectedRoute allowedRoles={['Team Head']}>
+              <ProtectedRoute allowedRoles={['Manager']}>
                 <TeamHeadHome />
               </ProtectedRoute>
             } />
             <Route path="profile" element={
-              <ProtectedRoute allowedRoles={['Team Head']}>
+              <ProtectedRoute allowedRoles={['Manager']}>
                 <Profile />
               </ProtectedRoute>
             } />

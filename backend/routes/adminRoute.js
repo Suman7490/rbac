@@ -264,7 +264,10 @@ router.put('/edit_employee/:id', (req, res) => {
         req.body.status
     ]
     con.query(sql, [...values, id], (err, result) => {
-        if (err) return res.json({ Status: false, Error: "Query Error from backend" })
+        if (err) {
+            console.error("SQL Error:", err); 
+            return res.json({ Status: false, Error: err.message })
+        } 
         return res.json({ Status: true, Result: result })
     })
 })

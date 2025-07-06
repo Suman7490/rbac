@@ -56,13 +56,14 @@ const EditEmployee = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
+        console.log("Submitting employee:", employee);
         axios.put('http://localhost:8081/auth/edit_employee/' + id, employee)
             .then(result => {
                 if (result.data.Status) {
                     navigate('/dashboard/employee')
                     alert("Employee updated successfully")
                 } else {
-                    alert("error from frontend", result.data.Error)
+                    alert("Error from backend: " + result.data.Error);
                 }
             })
             .catch(err => console.log("error from frontend", err))
@@ -91,8 +92,8 @@ const EditEmployee = () => {
                                     value={employee.role}
                                     onChange={(e) => setEmployee({ ...employee, role: e.target.value })}>
                                     <option>Select role</option>
-                                    {role.map(role => (
-                                        <option value={role.role}>{role.role}</option>
+                                    {role.map((role, index) => (
+                                        <option key={index} value={role.role}>{role.role}</option>
                                     ))}
                                 </select>
                             </div>
@@ -115,8 +116,8 @@ const EditEmployee = () => {
                                     value={employee.category}
                                     onChange={(e) => setEmployee({ ...employee, category: e.target.value })}>
                                     <option>Select Category</option>
-                                    {category.map(category => {
-                                        return <option value={category.name}>{category.name}</option>
+                                    {category.map((category, index) => {
+                                        return <option key={index} value={category.category}>{category.category}</option>
                                     })}
 
                                 </select>
